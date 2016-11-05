@@ -2,12 +2,22 @@ package com.carsonmyers.doodling;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
+
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -15,6 +25,29 @@ public class MainActivity extends AppCompatActivity {
     Button mSaveButton;
     Button mToolsButton;
     DoodleView mDoodleView;
+    PopupWindow mToolMenu;
+
+    // popup stuff
+    TextView mSelectedColorTextView;
+
+    Button mRedButton;
+    Button mOrangeButton;
+    Button mYellowButton;
+    Button mGreenButton;
+    Button mBlueButton;
+    Button mPurpleButton;
+    Button mBlackButton;
+    Button mWhiteButton;
+    Button mGrayButton;
+
+    SeekBar mOpacitySeekbar;
+    SeekBar mStrokeSizeSeekbar;
+
+    private boolean popupVisable = false;
+
+    private static final String TAG = "MainActivity";
+
+
 
     private boolean permissionToSave = false;
     final public int MY_PERMISSIONS_REQUEST_EXTERNAL_WRITE = 486;
@@ -37,6 +70,10 @@ public class MainActivity extends AppCompatActivity {
         //Gets the doodleView
         mDoodleView = (DoodleView) findViewById(R.id.doodleView);
 
+
+        //Sets up the popup menu
+        toolBarInit(); // needs to be called after its created
+
         //Sets the listeners on the buttons
         mClearButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +93,19 @@ public class MainActivity extends AppCompatActivity {
         mToolsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(!popupVisable) {
 
+                    mToolMenu.showAtLocation((RelativeLayout) findViewById(R.id.activity_main), Gravity.CENTER, 0, 0); // displays the tool menu in the center of the screen
+
+                    mToolsButton.setText("Dismiss");
+                    popupVisable = true;
+
+
+                } else{
+                    mToolMenu.dismiss();
+                    popupVisable = false;
+                    mToolsButton.setText(" Tools");
+                }
             }
         });
 
@@ -91,5 +140,163 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
         }
+    }
+
+    private void toolBarInit(){
+        LayoutInflater inflater = (LayoutInflater) getApplicationContext().getSystemService(LAYOUT_INFLATER_SERVICE); //gets the layout inflator
+        View toolMenuView = inflater.inflate(R.layout.tool_menu, null); // inflates the tool menu layout
+
+        mToolMenu = new PopupWindow(toolMenuView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT); //attaches the tool menu layout to a popup window
+
+        if (Build.VERSION.SDK_INT >= 21) { //prevents the app from crashing due to the window leaking
+            mToolMenu.setElevation(2 * getApplicationContext().getResources().getDisplayMetrics().density); // sets the elevation correctly for the right amount of shadow
+        }
+
+        //Button and seekbar stuff
+        mSelectedColorTextView = (TextView) toolMenuView.findViewById(R.id.selectedColorTextView);
+
+        mRedButton = (Button) toolMenuView.findViewById(R.id.redButton);
+        mOrangeButton = (Button) toolMenuView.findViewById(R.id.orangeButton);
+        mYellowButton = (Button) toolMenuView.findViewById(R.id.yellowButton);
+        mGreenButton = (Button) toolMenuView.findViewById(R.id.greenButton);
+        mBlueButton = (Button) toolMenuView.findViewById(R.id.blueButton);
+        mPurpleButton = (Button) toolMenuView.findViewById(R.id.purpleButton);
+        mWhiteButton = (Button) toolMenuView.findViewById(R.id.whiteButton);
+        mGrayButton = (Button) toolMenuView.findViewById(R.id.grayButton);
+        mBlackButton = (Button) toolMenuView.findViewById(R.id.blackButton);
+
+        mOpacitySeekbar = (SeekBar) toolMenuView.findViewById(R.id.opacitySeekBar);
+        mStrokeSizeSeekbar = (SeekBar) toolMenuView.findViewById(R.id.strokeSizeSeekBar);
+
+        mStrokeSizeSeekbar.setMax(0); //work around a bug where progress doesn't update in old android phones
+        mStrokeSizeSeekbar.setMax(255);
+        mStrokeSizeSeekbar.setProgress(10);
+        mDoodleView.setStrokeSize(10);
+
+        mOpacitySeekbar.setMax(0); //work around a bug where progress doesn't update in old android phones
+        mOpacitySeekbar.setMax(255);
+        mOpacitySeekbar.setProgress(255);
+        mDoodleView.setOpacity(255);
+
+        //sets the listeners
+        mRedButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mRedButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+
+        mOrangeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mOrangeButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+        mYellowButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mYellowButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+        mGreenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mGreenButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+        mBlueButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mBlueButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+        mPurpleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mPurpleButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+        mBlackButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mBlackButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+        mGrayButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mGrayButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+        mWhiteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int color = ((ColorDrawable) mWhiteButton.getBackground()).getColor();
+                mDoodleView.setColor(color);
+                mSelectedColorTextView.setBackgroundColor(color);
+            }
+        });
+
+        mOpacitySeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mDoodleView.setOpacity(mOpacitySeekbar.getProgress());
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        mStrokeSizeSeekbar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                mDoodleView.setStrokeSize(mStrokeSizeSeekbar.getProgress());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
+
     }
 }

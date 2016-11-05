@@ -1,17 +1,12 @@
 package com.carsonmyers.doodling;
 
-import android.Manifest;
 import android.content.Context;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.graphics.PorterDuff;
-import android.os.Build;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -21,6 +16,7 @@ import android.widget.Toast;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import static android.content.ContentValues.TAG;
@@ -31,8 +27,15 @@ import static android.content.ContentValues.TAG;
 
 public class DoodleView extends View {
 
-    private Paint mPaintDoole;
-    private Path mPath;
+    private ArrayList<Stroke> strokes = new ArrayList<Stroke>();
+
+    Paint mPaintDoodle;
+    Path mPath;
+
+    int paintColor = Color.rgb(76,175,80);
+    int strokeWidth = 10;
+    int opacity = 10;
+
 
     private boolean clear = false;
 
@@ -54,14 +57,10 @@ public class DoodleView extends View {
     private void init(AttributeSet attrs, int defStyle){
 
         // sets up the brush
-        mPaintDoole = new Paint();
-        mPaintDoole.setColor(Color.rgb(76,175,80));
-        mPaintDoole.setAntiAlias(true);
-        mPaintDoole.setStrokeWidth(10);
-        mPaintDoole.setStyle(Paint.Style.STROKE);
+        mPaintDoodle = getNewPaintDoodle();
 
         // sets up the path
-       mPath = new Path();
+        mPath = new Path();
     }
 
     @Override
@@ -70,10 +69,13 @@ public class DoodleView extends View {
 
         if(clear){ //clears the canvas
             mPath = new Path();
-            canvas.drawPath(mPath, mPaintDoole);
+            getNewPaintDoodle();
+            strokes = new ArrayList<Stroke>();
             clear = false;
         } else{
-            canvas.drawPath(mPath, mPaintDoole);
+            for (Stroke s : strokes) {
+                canvas.drawPath(s.getPath(), s.getPaint());
+            }
         }
 
     }
@@ -85,12 +87,17 @@ public class DoodleView extends View {
 
         switch (motionEvent.getAction()){
             case MotionEvent.ACTION_DOWN:
+                mPath = new Path();
+                mPaintDoodle = getNewPaintDoodle();
+                strokes.add(new Stroke(mPath, mPaintDoodle));
                 mPath.moveTo(touchX, touchY);
                 break;
             case MotionEvent.ACTION_MOVE:
                 mPath.lineTo(touchX, touchY);
                 break;
             case MotionEvent.ACTION_UP:
+                mPath = new Path();
+                mPaintDoodle = getNewPaintDoodle();
                 break;
         }
 
@@ -108,7 +115,14 @@ public class DoodleView extends View {
 
         Bitmap bitMapToSave = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888); //creates a bitmap of size of this object and configures it to the ARGB standard
         Canvas canvasToSave = new Canvas(bitMapToSave);
-        canvasToSave.drawPath(mPath, mPaintDoole); //draws the current doodle on the canvas
+        Paint backgroundFill = new Paint();
+        backgroundFill.setColor(Color.WHITE);
+        backgroundFill.setStyle(Paint.Style.FILL);
+        canvasToSave.drawPaint(backgroundFill); // makes the background white
+
+        for (Stroke s : strokes) {
+            canvasToSave.drawPath(s.getPath(), s.getPaint());//draws the current doodle on the canvas
+        }
 
         //Sets up the folder to store photos
         makeDooldingDir();
@@ -138,6 +152,31 @@ public class DoodleView extends View {
         if (!folder.exists()) {
            folder.mkdir();
         }
+    }
+
+    public void setColor(int color){
+        strokes.add(new Stroke(mPath, mPaintDoodle));
+        paintColor = color;
+    }
+
+    public void setOpacity(int alpha){
+        strokes.add(new Stroke(mPath, mPaintDoodle));
+        opacity = alpha;
+    }
+
+    public void setStrokeSize(int size){
+        strokes.add(new Stroke(mPath, mPaintDoodle));
+        strokeWidth = size;
+    }
+
+    private Paint getNewPaintDoodle(){
+        mPaintDoodle = new Paint();
+        mPaintDoodle.setColor(Color.argb(opacity, Color.red(paintColor),Color.green(paintColor), Color.blue(paintColor)));
+        mPaintDoodle.setAntiAlias(true);
+        mPaintDoodle.setStrokeWidth(strokeWidth);
+        mPaintDoodle.setStyle(Paint.Style.STROKE);
+
+        return mPaintDoodle;
     }
 
 }

@@ -39,7 +39,7 @@
                 android:drawableLeft="@drawable/ic_delete_forever"/>
 
             <Button
-                android:text="Tools"
+                android:text=" Tools"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/toolsButton"
