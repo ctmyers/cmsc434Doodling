@@ -17,16 +17,16 @@
 # Sources:
 
 ## Popup:
-*https://android--code.blogspot.com/2016/01/android-popup-window-example.html (after the android developer documentation wasn't helpful)
-*https://developer.android.com/reference/android/widget/PopupWindow.html
+* https://android--code.blogspot.com/2016/01/android-popup-window-example.html (after the android developer documentation wasn't helpful)
+* https://developer.android.com/reference/android/widget/PopupWindow.html
 
 ## Saving:
-*https://developer.android.com/guide/topics/resources/accessing-resources.html
-*https://developer.android.com/training/basics/data-storage/files.html
-*https://developer.android.com/training/permissions/requesting.html
-*http://stackoverflow.com/questions/15001455/saving-canvas-to-bitmap-on-android
+* https://developer.android.com/guide/topics/resources/accessing-resources.html
+* https://developer.android.com/training/basics/data-storage/files.html
+* https://developer.android.com/training/permissions/requesting.html
+* http://stackoverflow.com/questions/15001455/saving-canvas-to-bitmap-on-android
 
 ## Misc error troubleshooting:
-*http://stackoverflow.com/questions/10278467/seekbar-not-setting-actual-progress-setprogress-not-working-on-early-android
-*http://stackoverflow.com/questions/18316382/change-path-color-without-changing-previous-paths
-*http://stackoverflow.com/questions/26728570/android-appcompat-21-elevation
+* http://stackoverflow.com/questions/10278467/seekbar-not-setting-actual-progress-setprogress-not-working-on-early-android
+* http://stackoverflow.com/questions/18316382/change-path-color-without-changing-previous-paths
+* http://stackoverflow.com/questions/26728570/android-appcompat-21-elevation
