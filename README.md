@@ -13,6 +13,8 @@
 * Tap the Tools button (now dismiss) to dismiss the popup
 * Tap save to save your drawing to a folder called "Doolding" in external storage
 
+# Youtube:
+https://youtu.be/zpCAZvfYYoc
 
 # Sources:
 
