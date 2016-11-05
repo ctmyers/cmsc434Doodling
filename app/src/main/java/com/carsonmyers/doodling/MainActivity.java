@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 if(!popupVisable) {
 
-                    mToolMenu.showAtLocation((RelativeLayout) findViewById(R.id.activity_main), Gravity.CENTER, 0, 0); // displays the tool menu in the center of the screen
+                    mToolMenu.showAtLocation((RelativeLayout) findViewById(R.id.activity_main), Gravity.CENTER, 0, -100); // displays the tool menu in the center of the screen
 
                     mToolsButton.setText("Dismiss");
                     popupVisable = true;

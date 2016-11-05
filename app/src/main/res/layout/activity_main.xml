@@ -14,7 +14,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:weightSum="7">
+        android:weightSum="10">
 
         <com.carsonmyers.doodling.DoodleView
             android:layout_width="match_parent"
@@ -28,7 +28,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="6">
+            android:layout_weight="9">
 
             <Button
                 android:text="Clear"
@@ -36,7 +36,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/clearButton"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_delete_forever"/>
+                android:drawableLeft="@drawable/ic_delete_forever"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/darker_gray" />
 
             <Button
                 android:text=" Tools"
@@ -44,7 +46,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/toolsButton"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_build"/>
+                android:drawableLeft="@drawable/ic_build"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/darker_gray" />
 
             <Button
                 android:text="Save"
@@ -52,7 +56,9 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/saveButton"
                 android:layout_weight="1"
-                android:drawableLeft="@drawable/ic_save"/>
+                android:drawableLeft="@drawable/ic_save"
+                android:textColor="@android:color/white"
+                android:backgroundTint="@android:color/darker_gray" />
         </LinearLayout>
 
 
