@@ -2,16 +2,16 @@
 
 
 # How to run:
--Import project to android studio
--build app using gradel
--run on device or emulator
+1. Import project to android studio
+2. build app using gradel
+3. run on device or emulator
 
 # How to use:
-- Touch the screen to draw
-- Clear button will clear the drawing
-- Tap the Tools button to open a popup to change color, opacity, stroke size
-- Tap the Tools button (now dismiss) to dismiss the popup
-- Tap save to save your drawing to a folder called "Doolding" in external storage
+* Touch the screen to draw
+* Clear button will clear the drawing
+* Tap the Tools button to open a popup to change color, opacity, stroke size
+* Tap the Tools button (now dismiss) to dismiss the popup
+* Tap save to save your drawing to a folder called "Doolding" in external storage
 
 
 # Sources:
